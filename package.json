@@ -1,0 +1,15 @@
+{
+  "name": "sy-localhelp",
+  "version": "1.0.0",
+  "private": true,
+  "description": "本地工具与能力库：远程调试浏览器、登录态管理、自动化辅助",
+  "scripts": {
+    "debug:browser": "node tools/connect_debug.js",
+    "session:monitor": "node tools/session_monitor.js",
+    "debug:token": "node debug/inspect_token.js",
+    "debug:clear-token": "node debug/clear_token_and_watch.js"
+  },
+  "dependencies": {
+    "playwright": "1.59.1"
+  }
+}
