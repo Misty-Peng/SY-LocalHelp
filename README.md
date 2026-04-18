@@ -6,23 +6,35 @@
 
 ```text
 SY-LocalHelp/
-├─ skills/              # 可复用能力文档（SKILL），一个 SKILL 一个文件夹
+├─ skills/                    # 可复用能力文档（SKILL），一个 SKILL 一个文件夹
 │  ├─ README.md
-│  └─ launch-debug-browser/
-│     └─ SKILL.md
-├─ tools/               # 可执行脚本 / 可 require 的模块（稳定）
+│  ├─ launch-debug-browser/
+│  │  └─ SKILL.md             # 启动/复用远程调试浏览器
+│  ├─ lemo-login/
+│  │  └─ SKILL.md             # 乐檬登录、登录态检查、会话保活
+│  └─ supplier-management/
+│     └─ SKILL.md             # 供应商查询、新增、改名自动化
+├─ tools/                     # 稳定、可复用的脚本和模块
 │  ├─ README.md
-│  ├─ debug_browser.js  # 核心模块：ensureDebugBrowser / connectCDP 等
-│  └─ connect_debug.js  # 入口脚本：检测或启动调试浏览器并输出状态
-├─ debug/               # 一次性 / 探索性调试脚本（不稳定，可能沉淀到 tools/ 或 skills/）
+│  ├─ config.js               # 共享配置（URL、token key、路径）
+│  ├─ debug_browser.js        # 核心模块：ensureDebugBrowser / connectCDP / safeDisconnect
+│  ├─ connect_debug.js        # 入口脚本：检测或启动调试浏览器并输出状态
+│  ├─ session_monitor.js      # 乐檬登录态监控 + 10 分钟 keepalive
+│  └─ supplier.js             # 供应商查询、新增、改名（CLI + 模块）
+├─ debug/                     # 探索性调试脚本（临时，可能沉淀到 tools/ 或 skills/）
 │  ├─ README.md
-│  ├─ inspect_token.js
-│  └─ clear_token_and_watch.js
+│  ├─ inspect_token.js        # 扫描 localStorage / Cookie 中的 token
+│  └─ clear_token_and_watch.js# 清除 token 并观察刷新行为
+├─ templates/                 # 可复制到其他项目的模板
+│  ├─ README.md
+│  └─ AGENTS.md               # 前后端通用 Agent 协作手册模板
+├─ logs/                      # 运行时日志（已 gitignore）
 ├─ .windsurf/
-│  └─ workflows/        # Windsurf 工作流触发器（/slash-command），通常指向 skills/
-├─ .pw-user-data/       # Playwright Chromium 持久化用户目录（保持登录态）
-├─ .playwright-cli/     # playwright-cli 的日志 / 快照缓存
-├─ node_modules/
+│  └─ workflows/              # Windsurf 触发器（/slash-command）
+├─ .pw-user-data/             # Chromium 持久化用户目录（已 gitignore）
+├─ .playwright-cli/           # playwright-cli 缓存（已 gitignore）
+├─ package.json
+├─ .gitignore
 └─ README.md
 ```
 
@@ -39,7 +51,8 @@ SY-LocalHelp/
 ### 启动或复用调试浏览器
 
 ```bash
-node tools/connect_debug.js
+npm run debug:browser
+# 或 node tools/connect_debug.js
 ```
 
 - 首次运行：启动 Playwright 自带 Chromium，监听远程调试端口 `9222`，用户数据写入 `.pw-user-data/`
@@ -47,16 +60,27 @@ node tools/connect_debug.js
 
 详细说明：`skills/launch-debug-browser/SKILL.md`
 
+### 登录态监控
+
+```bash
+npm run session:monitor
+# 或 node tools/session_monitor.js
+```
+
+- 自动检测登录态 → 未登录则打开登录页等待用户操作 → 登录后校验 → 每 10 分钟保活
+
+详细说明：`skills/lemo-login/SKILL.md`
+
 ### 在自定义脚本中复用
 
 ```js
-const { ensureDebugBrowser, connectCDP } = require('./tools/debug_browser');
+const { ensureDebugBrowser, connectCDP, safeDisconnect } = require('./tools/debug_browser');
 
 (async () => {
   await ensureDebugBrowser({ url: 'https://example.com' });
   const { browser, page } = await connectCDP();
   console.log(page.url(), await page.title().catch(() => 'N/A'));
-  await browser.close(); // 仅断开 CDP，不关闭浏览器
+  await safeDisconnect(browser); // 仅断开 CDP，不关闭浏览器
 })();
 ```
 
@@ -77,3 +101,4 @@ const { ensureDebugBrowser, connectCDP } = require('./tools/debug_browser');
 - `skills/README.md` — SKILL 目录约定与清单
 - `tools/README.md` — 工具目录约定与清单
 - `debug/README.md` — 调试脚本目录约定与清单
+- `templates/README.md` — 可复制模板（AGENTS.md 等）

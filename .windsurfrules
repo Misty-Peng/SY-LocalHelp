@@ -1,0 +1,15 @@
+# SY-LocalHelp 项目规则
+
+- 项目远程仓库：git@github.com:Misty-Peng/SY-LocalHelp.git，主分支为 main
+- 执行登录逻辑的入口命令：`node tools/session_monitor.js`，默认前台保活模式（每 10 分钟刷新）
+- 登录流程状态机：bootstrap -> find-page -> precheck -> login -> post-check -> keepalive
+- 登录前会自动做 precheck，若已登录则跳过登录直接进入保活
+- 登录态校验依赖接口 `CURRENT_USER_API` 返回状态，不能仅凭页面跳转判断
+- `.gitignore` 已排除 `node_modules/`、`.pw-user-data/`、`.playwright-cli/`、`logs/`、`*.log`
+- 乐檬系统 UI 基于 Earth（Ant Design 定制，class 前缀 `earth-`），表格用 ag-Grid（非标准 `<table>`），选择器必须按 ag-Grid 规则写
+- ag-Grid 行在 `.ag-center-cols-container .ag-row`，列用 `[col-id="xxx"]` 定位；checkbox 在左侧固定列，不在 center-cols-container 中，需用 `.ag-row[row-id="xxx"]` 全行定位
+- 供应商页面详情和列表同 URL，通过检测 `input#supplier_name` 和取消按钮判断当前视图；导航时需先关闭弹窗再返回列表
+- 系统搜索对特殊字符（下划线等）不友好，查询逻辑需加入截取关键字重试机制
+- 品牌弹窗（`.earth-modal-wrap`）内嵌 ag-Grid 做多选，勾选后点确定关闭
+- `skills/*/SKILL.md` 遵循 AgentSkills 规范，frontmatter 含 `name`、`description`、`user-invocable`，交互规范直接写在 SKILL.md 正文，Windsurf 和 OpenClaw 双平台通用
+- workflow（`.windsurf/workflows/`）是 Windsurf 专属触发器，OpenClaw 通过 SKILL frontmatter `user-invocable: true` 自动注册斜杠命令

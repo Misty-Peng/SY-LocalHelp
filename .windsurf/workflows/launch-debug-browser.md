@@ -24,4 +24,3 @@ curl http://127.0.0.1:9222/json/version
 
 - 默认端口 `9222`，持久化目录 `.pw-user-data/`
 - 已存在则复用，不存在则使用 Playwright 自带 Chromium 启动
-- 在代码中复用：`require('./tools/debug_browser')`，推荐入口 `ensureDebugBrowser` / `connectCDP`

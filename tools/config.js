@@ -6,5 +6,6 @@ module.exports = {
   CURRENT_USER_API: 'https://account-new.shouyangfruit.com/earth-gateway/galaxy-group/business/nhsoft.galaxy.group.company.user.current.read',
   GALAXY_TOKEN_KEY: 'LEMON_EARTH_GALAXY_TOKEN',
   DOMAIN_REGEX: /shouyangfruit\.com/,
+  SUPPLIER_URL: 'https://account-new.shouyangfruit.com/galaxy-group/setting-center/supplier',
   LOG_DIR: path.resolve(__dirname, '..', 'logs'),
 };

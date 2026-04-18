@@ -13,9 +13,11 @@
 
 | 文件 | 用途 |
 | --- | --- |
-| `debug_browser.js` | 检测/启动远程调试浏览器并连接 CDP |
+| `config.js` | 共享配置（业务 URL、token key、日志路径等） |
+| `debug_browser.js` | 检测/启动远程调试浏览器并连接 CDP，含 `safeDisconnect` |
 | `connect_debug.js` | 连接已存在的调试浏览器并打印当前状态 |
 | `session_monitor.js` | 登录流程、登录态检查、10 分钟 keepalive 刷新 |
+| `supplier.js` | 供应商查询、新增、改名（CLI + 模块） |
 
 ## 使用示例
 
@@ -29,4 +31,12 @@ node tools/session_monitor.js
 
 ```bash
 node tools/connect_debug.js
+```
+
+### 供应商操作
+
+```bash
+node tools/supplier.js query  "供应商名"
+node tools/supplier.js add    "供应商名" "供应商类型" "归属区域"
+node tools/supplier.js rename "旧名或代码" "新名称"
 ```
