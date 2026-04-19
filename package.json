@@ -10,7 +10,10 @@
     "debug:clear-token": "node debug/clear_token_and_watch.js",
     "supplier:query": "node tools/supplier.js query",
     "supplier:add": "node tools/supplier.js add --",
-    "supplier:rename": "node tools/supplier.js rename"
+    "supplier:rename": "node tools/supplier.js rename",
+    "product:query": "node tools/product.js query",
+    "product:add": "node tools/product.js add --",
+    "product:rename": "node tools/product.js rename"
   },
   "dependencies": {
     "playwright": "1.59.1"

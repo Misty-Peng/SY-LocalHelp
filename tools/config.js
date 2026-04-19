@@ -7,5 +7,6 @@ module.exports = {
   GALAXY_TOKEN_KEY: 'LEMON_EARTH_GALAXY_TOKEN',
   DOMAIN_REGEX: /shouyangfruit\.com/,
   SUPPLIER_URL: 'https://account-new.shouyangfruit.com/galaxy-group/setting-center/supplier',
+  PRODUCT_URL: 'https://account-new.shouyangfruit.com/galaxy-group/setting-center/product/product-info',
   LOG_DIR: path.resolve(__dirname, '..', 'logs'),
 };
