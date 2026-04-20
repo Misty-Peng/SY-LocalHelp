@@ -32,7 +32,9 @@ description: <一句话说明>
 
 - **`launch-debug-browser/`** — 启动并复用带远程调试端口的本地 Chromium，供 Playwright 通过 CDP 连接
 - **`lemo-login/`** — 乐檬（lemo）系统登录、登录态检查与会话保活
+- **`yunlogin-login/`** — 云之家（yunlogin）登录、登录态检查与会话保活
 - **`supplier-management/`** — 供应商查询、新增、改名自动化
+- **`yunlogin-current-user-identity/`** — 云之家（yunlogin）会话中基于消息元数据识别当前用户身份的处理规则
 
 ## 与 `.windsurf/workflows/` 的关系
 

@@ -6,6 +6,7 @@
   "scripts": {
     "debug:browser": "node tools/connect_debug.js",
     "session:monitor": "node tools/session_monitor.js",
+    "yzj:login": "node tools/yzj_session_monitor.js",
     "debug:token": "node debug/inspect_token.js",
     "debug:clear-token": "node debug/clear_token_and_watch.js",
     "supplier:query": "node tools/supplier.js query",
